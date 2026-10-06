@@ -11,16 +11,11 @@
    ===================================================================== */
 
 export const site = {
-  name: "FRAMELOCK", // <- brand name shown top-left (change to anything you like)
+  name: "FRAME-LOCK", // <- brand name shown top-left (the hyphen is shown in cyan)
   role: "AI Commercial Producers · Technical Art Directors",
-  metaTitle: "Framelock | AI Commercial Production Studio",
+  metaTitle: "Frame-Lock | AI Commercial Production Studio",
   metaDescription:
     "High-conversion commercials in every aspect ratio, photorealistic architectural renderings and locked character pipelines.",
-  links: [
-    // Leave the list empty [] to hide social links.
-    { label: "LinkedIn", url: "https://linkedin.com/in/your-handle" },
-    { label: "Instagram", url: "https://instagram.com/your-handle" },
-  ],
 };
 
 /* ---------------------------- HERO SECTION ---------------------------- */
@@ -34,7 +29,15 @@ export const hero = {
 };
 
 /* ------------------------ CAMPAIGNS (VIDEO WORK) ----------------------- */
-export const campaigns = [
+type Project = { title: string; tag: string; ratio: string; video: string; poster: string; status?: string };
+type Campaign = {
+  id: string; sectionTitle: string; client: string; intro: string;
+  projects: Project[];
+  storyboards?: { title: string; image: string }[];
+};
+
+// "status" shows a gold badge on a card (use it for work in progress). Leave video: "" until it is ready.
+export const campaigns: Campaign[] = [
   {
     id: "dosti",
     sectionTitle: "Real estate campaigns",
@@ -61,6 +64,19 @@ export const campaigns = [
       // To add the 10Cr+ Downloads Campaign, copy the line below, remove the // and set the file name:
       // { title: "10Cr+ Downloads Campaign", tag: "Milestone campaign", ratio: "9:16", video: "/videos/YourFile.mp4", poster: "" },
     ],
+  },
+  {
+    id: "spynpro",
+    sectionTitle: "Academy campaigns",
+    client: "SpynPRO",
+    intro: "Story-led films for SpynPRO, made for sports, education and activity academies.",
+    projects: [
+      { title: "SpynPRO Ad One", tag: "Academy campaign", ratio: "9:16", video: "/videos/spyn_AD_One_1.mp4", poster: "" },
+      { title: "SpynPRO Ad Two", tag: "Academy campaign", ratio: "9:16", video: "", poster: "", status: "In production" },
+    ],
+    // Storyboard row is hidden while this list is empty. To add one later, use:
+    // storyboards: [{ title: "SpynPRO storyboard", image: "/images/YourFileName.jpg" }],
+    storyboards: [],
   },
 ];
 
@@ -122,6 +138,42 @@ export const previs = {
     { name: "Video Synthesis", text: "Shots are generated against the locked references." },
     { name: "VFX Tracking", text: "Product, text and set elements are tracked and composited." },
     { name: "Master Audio", text: "Voice, music and sound design are mixed for mobile speakers." },
+  ],
+};
+
+/* ------------------------------ ABOUT US ------------------------------ */
+export const about = {
+  title: "About us",
+  intro:
+    "Frame-Lock is the studio we built around one idea: every frame should be locked in, from the first storyboard to the final mix. It is the two of us, so the people you brief are the people who make your film.",
+  people: [
+    {
+      name: "Vedant Diptiman Bhaumik",
+      role: "Co-founder · AI Commercial Producer & Technical Art Director",
+      text: "Designs how every film looks and what every AI tool is asked to make.",
+      duties: ["Storyboards", "Character images", "AI video prompts", "Voiceover prompts"],
+    },
+    {
+      name: "Ashish Ashok Surwase",
+      role: "Co-founder · Script, Generation & Edit",
+      text: "Writes the script, generates the video and voice, and cuts it all into the final film.",
+      duties: ["Script writing", "AI video generation", "Voiceover generation", "Final edit"],
+    },
+  ],
+  equalNote: "We contribute equally. Every film is a shared effort from the first frame to the final cut.",
+  whatTitle: "What we do",
+  what: [
+    "AI commercials and reels in every aspect ratio",
+    "Photorealistic architectural renderings",
+    "Locked character pipelines with 3-angle model sheets",
+    "Storyboards, VFX tracking and master audio, end to end",
+  ],
+  whyTitle: "Why choose us",
+  why: [
+    { title: "No character drift", text: "Every character is locked before a single shot is generated, so faces and outfits stay the same across a campaign." },
+    { title: "Built to convert", text: "Hooks are scripted for the first three seconds, because that is where a scroll is won or lost." },
+    { title: "One team, every format", text: "One production covers every platform, from vertical reels to ultrawide screens." },
+    { title: "Direct access", text: "You work with the two people who make the film, with no layers in between." },
   ],
 };
 

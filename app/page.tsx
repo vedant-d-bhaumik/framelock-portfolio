@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, MotionConfig, useScroll, useTransform } from "framer-motion";
-import { site, hero, campaigns, formats, consistency, previs, contact } from "@/data";
+import { site, hero, campaigns, formats, consistency, previs, about, contact } from "@/data";
 
 // Opens a Gmail compose window addressed to both of us
 const gmailUrl =
@@ -79,7 +79,7 @@ function NaturalImage({ src, alt }: { src?: string; alt: string }) {
 }
 
 // 9:16 video card: plays on hover (desktop) or tap (mobile)
-function VideoCard({ title, tag, video, poster, ratio = "9:16" }: { title: string; tag: string; video: string; poster?: string; ratio?: string }) {
+function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { title: string; tag: string; video: string; poster?: string; ratio?: string; status?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [rw, rh] = ratio.split(":").map(Number);
   const r = rw / rh;
@@ -159,6 +159,11 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16" }: { title: strin
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070a13]/90 via-transparent to-transparent" />
         <div className="pointer-events-none absolute inset-0 opacity-0 shadow-[inset_0_0_0_1px_rgba(34,211,238,0.7),inset_0_0_40px_rgba(34,211,238,0.25)] transition-opacity duration-500 group-hover:opacity-100" />
+        {status && (
+          <div className="pointer-events-none absolute left-3 top-3 rounded-full bg-[#e8b94a] px-3 py-1 text-[11px] font-semibold text-[#070a13]">
+            {status}
+          </div>
+        )}
         {playing && !sound && (
           <div className="pointer-events-none absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[11px] text-white backdrop-blur">
             Click once to enable sound
@@ -279,7 +284,14 @@ export default function Home() {
         {/* Navigation */}
         <header className="fixed inset-x-0 top-0 z-50 bg-gradient-to-b from-[#070a13] via-[#070a13] to-transparent pb-6">
           <nav className="mx-auto mt-4 flex w-[92%] max-w-6xl items-center justify-between rounded-full border border-white/10 bg-[#0c1224] px-5 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
-            <a href="#top" className="font-display text-base font-bold tracking-[0.2em] text-white">{site.name}</a>
+            <a href="#top" className="font-display text-base font-bold tracking-[0.2em] text-white">
+              {site.name.split("-").map((part, i) => (
+                <span key={i}>
+                  {i > 0 && <span className="text-[#22d3ee]">-</span>}
+                  {part}
+                </span>
+              ))}
+            </a>
             <a href="#contact" className="rounded-full bg-[#22d3ee] px-4 py-1.5 text-sm font-semibold text-[#070a13] transition-shadow hover:shadow-[0_0_24px_rgba(34,211,238,0.6)]">
               Hire Us!
             </a>
@@ -365,6 +377,25 @@ export default function Home() {
                   </Reveal>
                 ))}
               </div>
+              {c.storyboards && c.storyboards.length > 0 && (
+                <div className="mt-10">
+                  <Reveal>
+                    <h3 className="font-display text-xl font-semibold text-white">Storyboard</h3>
+                  </Reveal>
+                  <div className="mt-5 grid gap-6 md:grid-cols-2">
+                    {c.storyboards.map((b) => (
+                      <Reveal key={b.title}>
+                        <div className="glass overflow-hidden rounded-2xl">
+                          <div className="bg-black">
+                            <NaturalImage src={b.image} alt={b.title} />
+                          </div>
+                          <p className="font-display p-4 text-base font-semibold text-white">{b.title}</p>
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </section>
@@ -452,6 +483,58 @@ export default function Home() {
           </ol>
         </section>
 
+        {/* About us */}
+        <section className="scroll-mt-28 mx-auto max-w-6xl px-6 py-24">
+          <SectionTitle title={about.title} intro={about.intro} />
+          <div className="grid gap-6 md:grid-cols-2">
+            {about.people.map((p, i) => (
+              <Reveal key={p.name} delay={i * 0.12}>
+                <div className="glass h-full rounded-3xl p-6 md:p-8">
+                  <h3 className="font-display text-2xl font-semibold text-white">{p.name}</h3>
+                  <p className="mt-1 text-sm text-[#e8b94a]">{p.role}</p>
+                  <p className="mt-4 leading-relaxed text-slate-400">{p.text}</p>
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {p.duties.map((t) => (
+                      <li key={t} className="rounded-full border border-[#22d3ee]/30 bg-[#22d3ee]/10 px-3 py-1 text-sm text-slate-200">{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal>
+            <p className="mt-8 text-center text-slate-300">{about.equalNote}</p>
+          </Reveal>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <Reveal>
+              <div className="glass h-full rounded-3xl p-6 md:p-8">
+                <h3 className="font-display text-xl font-semibold text-white">{about.whatTitle}</h3>
+                <ul className="mt-4 space-y-3 text-slate-300">
+                  {about.what.map((w) => (
+                    <li key={w} className="flex gap-3">
+                      <span className="mt-2.5 h-1.5 w-1.5 flex-none rounded-full bg-[#22d3ee]" />
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <div className="glass h-full rounded-3xl p-6 md:p-8">
+                <h3 className="font-display text-xl font-semibold text-white">{about.whyTitle}</h3>
+                <div className="mt-4 space-y-4">
+                  {about.why.map((w) => (
+                    <div key={w.title}>
+                      <p className="font-display font-semibold text-white">{w.title}</p>
+                      <p className="text-sm leading-relaxed text-slate-400">{w.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         {/* Contact */}
         <section id="contact" className="scroll-mt-28 relative px-6 pb-12 pt-24">
           <div className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-72 max-w-3xl rounded-full bg-[#22d3ee]/15 blur-[130px]" />
@@ -472,11 +555,6 @@ export default function Home() {
                 >
                   {contact.emailButtonLabel}
                 </a>
-                <div className="mt-6 flex justify-center gap-6 text-sm text-slate-400">
-                  {site.links.map((l) => (
-                    <a key={l.url} href={l.url} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#22d3ee]">{l.label}</a>
-                  ))}
-                </div>
               </div>
             </div>
           </Reveal>
