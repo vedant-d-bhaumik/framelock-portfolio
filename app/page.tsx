@@ -78,6 +78,18 @@ function NaturalImage({ src, alt }: { src?: string; alt: string }) {
   return <img ref={ref} src={url(src)} alt={alt} onError={() => setFailed(true)} className="block h-auto w-full" />;
 }
 
+// Only ONE video may play at a time on the whole page
+let activeVideo: HTMLVideoElement | null = null;
+function playOnly(v: HTMLVideoElement) {
+  if (activeVideo && activeVideo !== v) {
+    activeVideo.pause();
+    activeVideo.muted = true;
+  }
+  activeVideo = v;
+}
+// True on computers with a mouse, false on phones and tablets
+const canHover = () => typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
 // 9:16 video card: plays on hover (desktop) or tap (mobile)
 function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { title: string; tag: string; video: string; poster?: string; ratio?: string; status?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -94,24 +106,31 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
   }, []);
 
   const [sound, setSound] = useState(false);
+  const [touch, setTouch] = useState(false);
+  useEffect(() => setTouch(!canHover()), []);
 
-  // Hover = play WITH sound. If the browser blocks sound (no click on the page yet),
-  // it falls back to silent playback until the visitor clicks once.
+  // Pause automatically when the video scrolls out of view
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting && !v.paused) { v.pause(); v.muted = true; }
+    }, { threshold: 0.25 });
+    io.observe(v);
+    return () => io.disconnect();
+  }, [failed]);
+
+  // Play WITH sound. If the browser blocks sound, fall back to silent playback.
   const startWithSound = async () => {
     const v = ref.current;
     if (!v) return;
+    playOnly(v);
     v.muted = false;
     try {
       await v.play();
-      setPlaying(true);
-      setSound(true);
     } catch {
       v.muted = true;
-      try {
-        await v.play();
-        setPlaying(true);
-        setSound(false);
-      } catch {}
+      try { await v.play(); } catch {}
     }
   };
   const stop = () => {
@@ -119,8 +138,6 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
     if (!v) return;
     v.pause();
     v.muted = true;
-    setPlaying(false);
-    setSound(false);
   };
 
   return (
@@ -132,11 +149,10 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
       <button
         type="button"
         aria-label={`Play ${title}`}
-        onPointerEnter={(e) => { if (e.pointerType === "mouse") startWithSound(); }}
-        onPointerLeave={(e) => { if (e.pointerType === "mouse") stop(); }}
-        onClick={(e) => {
-          const isTouch = (e.nativeEvent as PointerEvent).pointerType !== "mouse";
-          if (isTouch && playing) return stop(); // tap again to stop on phones
+        onPointerEnter={(e) => { if (e.pointerType === "mouse" && canHover()) startWithSound(); }}
+        onPointerLeave={(e) => { if (e.pointerType === "mouse" && canHover()) stop(); }}
+        onClick={() => {
+          if (!canHover() && playing) return stop(); // phones: tap again to stop
           startWithSound();
         }}
         style={{ aspectRatio: `${rw} / ${rh}` }}
@@ -151,6 +167,9 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
             loop
             playsInline
             preload="metadata"
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+            onVolumeChange={(e) => setSound(!e.currentTarget.muted)}
             onError={() => setFailed(true)}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
@@ -164,7 +183,12 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
             {status}
           </div>
         )}
-        {playing && !sound && (
+        {touch && video && !failed && !playing && (
+          <div className="pointer-events-none absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[11px] text-white backdrop-blur">
+            Tap to play
+          </div>
+        )}
+        {playing && !sound && !touch && (
           <div className="pointer-events-none absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[11px] text-white backdrop-blur">
             Click once to enable sound
           </div>
@@ -193,6 +217,7 @@ const field =
 // Enquiry form: emails both addresses in data.ts (via FormSubmit)
 function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [detail, setDetail] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -214,10 +239,12 @@ function ContactForm() {
           _captcha: "false",
         }),
       });
-      if (!res.ok) throw new Error("failed");
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || String(result.success) === "false") throw new Error(result.message || "failed");
       setStatus("sent");
       form.reset();
-    } catch {
+    } catch (err) {
+      setDetail(err instanceof Error ? err.message : "");
       setStatus("error");
     }
   }
@@ -265,7 +292,12 @@ function ContactForm() {
       >
         {status === "sending" ? "Sending..." : contact.submitLabel}
       </button>
-      {status === "error" && <p className="text-center text-sm text-red-300">{contact.errorText}</p>}
+      {status === "error" && (
+        <p className="text-center text-sm text-red-300">
+          {contact.errorText}
+          {detail && detail !== "failed" ? ` (${detail})` : ""}
+        </p>
+      )}
     </form>
   );
 }
