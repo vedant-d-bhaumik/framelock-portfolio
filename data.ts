@@ -159,7 +159,8 @@ export const certifications = {
       issuer: "Google Cloud",
       validity: "Verified Credential",
       credentialId: "Google Cloud Skills Boost",
-      verifyUrl: "https://www.skills.google/public_profiles/YOUR_PUBLIC_PROFILE_ID",
+      // Left undefined so it renders as a native verified badge with no broken link:
+      verifyUrl: "",
       badgeImage: "/images/google-genai-badge.png",
       features: [
         { label: "Diffusion & Foundational AI", desc: "Deep technical command over visual synthesis pipelines, prompt engineering, and character preservation." },

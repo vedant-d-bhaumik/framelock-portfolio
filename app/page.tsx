@@ -307,7 +307,6 @@ export default function Home() {
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const heroFade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  // Tab state to switch between Badge and Official Certificate display
   const [activeCertView, setActiveCertView] = useState<"badge" | "certificate">("badge");
 
   return (
@@ -535,7 +534,7 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* Visual Asset (Badge vs Certificate switch if available) */}
+                    {/* Visual Asset */}
                     <div className="mt-6 flex flex-col items-center">
                       {item.certificateImage ? (
                         <div className="w-full">
@@ -597,14 +596,20 @@ export default function Home() {
                     <p className="text-xs text-slate-500 font-mono">
                       ID: {item.credentialId}
                     </p>
-                    <a
-                      href={item.verifyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#22d3ee] transition-colors hover:text-white"
-                    >
-                      Verify Credential ↗
-                    </a>
+                    {item.verifyUrl ? (
+                      <a
+                        href={item.verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#22d3ee] transition-colors hover:text-white"
+                      >
+                        Verify Credential ↗
+                      </a>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+                        ✓ Verified Credential
+                      </span>
+                    )}
                   </div>
                 </div>
               </Reveal>
