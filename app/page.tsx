@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, MotionConfig, useScroll, useTransform } from "framer-motion";
-import { site, hero, campaigns, formats, consistency, previs, about, contact } from "@/data";
+import { site, hero, campaigns, formats, consistency, previs, certifications, about, contact } from "@/data";
 
 // Opens a Gmail compose window addressed to both of us
 const gmailUrl =
@@ -59,7 +59,7 @@ function SafeImage({ src, alt }: { src?: string; alt: string }) {
   return <img ref={ref} src={url(src)} alt={alt} onError={() => setFailed(true)} className="absolute inset-0 h-full w-full object-cover" />;
 }
 
-// Image shown at its own natural shape (used for model sheets and storyboards)
+// Image shown at its own natural shape (used for model sheets, certificates and storyboards)
 function NaturalImage({ src, alt }: { src?: string; alt: string }) {
   const ref = useRef<HTMLImageElement>(null);
   const [failed, setFailed] = useState(false);
@@ -99,7 +99,6 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
 
-  // If the video file is missing, show the placeholder instead of a black box
   useEffect(() => {
     const v = ref.current;
     if (v && (v.error || v.networkState === 3)) setFailed(true);
@@ -109,7 +108,6 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
   const [touch, setTouch] = useState(false);
   useEffect(() => setTouch(!canHover()), []);
 
-  // Pause automatically when the video scrolls out of view
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
@@ -120,7 +118,6 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
     return () => io.disconnect();
   }, [failed]);
 
-  // Play WITH sound. If the browser blocks sound, fall back to silent playback.
   const startWithSound = async () => {
     const v = ref.current;
     if (!v) return;
@@ -152,7 +149,7 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
         onPointerEnter={(e) => { if (e.pointerType === "mouse" && canHover()) startWithSound(); }}
         onPointerLeave={(e) => { if (e.pointerType === "mouse" && canHover()) stop(); }}
         onClick={() => {
-          if (!canHover() && playing) return stop(); // phones: tap again to stop
+          if (!canHover() && playing) return stop();
           startWithSound();
         }}
         style={{ aspectRatio: `${rw} / ${rh}` }}
@@ -309,6 +306,9 @@ export default function Home() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const heroFade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  // Tab state to switch between Badge and Official Certificate display
+  const [activeCertView, setActiveCertView] = useState<"badge" | "certificate">("badge");
 
   return (
     <MotionConfig reducedMotion="user">
@@ -513,6 +513,103 @@ export default function Home() {
               </Reveal>
             ))}
           </ol>
+        </section>
+
+        {/* Certifications & Technical Standards */}
+        <section id="certifications" className="scroll-mt-28 mx-auto max-w-6xl px-6 py-24">
+          <SectionTitle title={certifications.title} intro={certifications.intro} />
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {certifications.items.map((item, idx) => (
+              <Reveal key={item.title} delay={idx * 0.12}>
+                <div className="glass flex h-full flex-col justify-between rounded-3xl p-6 md:p-8 transition-colors hover:border-[#22d3ee]/40">
+                  <div>
+                    {/* Header: Title + Tag */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+                      <div>
+                        <span className="text-xs font-semibold tracking-wider text-[#22d3ee] uppercase">{item.issuer}</span>
+                        <h3 className="font-display text-2xl font-bold text-white mt-1">{item.title}</h3>
+                      </div>
+                      <span className="rounded-full border border-[#e8b94a]/40 bg-[#e8b94a]/10 px-3 py-1 text-xs font-semibold text-[#e8b94a]">
+                        {item.validity}
+                      </span>
+                    </div>
+
+                    {/* Visual Asset (Badge vs Certificate switch if available) */}
+                    <div className="mt-6 flex flex-col items-center">
+                      {item.certificateImage ? (
+                        <div className="w-full">
+                          <div className="mb-3 flex justify-end gap-2 text-xs">
+                            <button
+                              type="button"
+                              onClick={() => setActiveCertView("badge")}
+                              className={`rounded-full px-3 py-1 transition-colors ${
+                                activeCertView === "badge"
+                                  ? "bg-[#22d3ee] text-[#070a13] font-semibold"
+                                  : "glass text-slate-400 hover:text-white"
+                              }`}
+                            >
+                              Badge View
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setActiveCertView("certificate")}
+                              className={`rounded-full px-3 py-1 transition-colors ${
+                                activeCertView === "certificate"
+                                  ? "bg-[#22d3ee] text-[#070a13] font-semibold"
+                                  : "glass text-slate-400 hover:text-white"
+                              }`}
+                            >
+                              Official Certificate
+                            </button>
+                          </div>
+
+                          {activeCertView === "badge" ? (
+                            <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
+                              <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
+                            </div>
+                          ) : (
+                            <div className="glass overflow-hidden rounded-2xl border border-white/10 bg-black/60 p-2">
+                              <NaturalImage src={item.certificateImage} alt={`${item.title} Full Certificate`} />
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
+                          <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Features & Deliverables */}
+                    <div className="mt-6 space-y-3">
+                      {item.features.map((f) => (
+                        <div key={f.label} className="rounded-xl border border-white/5 bg-[#0c1224]/50 p-3">
+                          <p className="font-display text-sm font-semibold text-white">{f.label}</p>
+                          <p className="mt-0.5 text-xs leading-relaxed text-slate-400">{f.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Footer link & credential ID */}
+                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4">
+                    <p className="text-xs text-slate-500 font-mono">
+                      ID: {item.credentialId}
+                    </p>
+                    <a
+                      href={item.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#22d3ee] transition-colors hover:text-white"
+                    >
+                      Verify Credential ↗
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         {/* About us */}

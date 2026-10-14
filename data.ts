@@ -61,8 +61,6 @@ export const campaigns: Campaign[] = [
       { title: "Home Renovation", tag: "Dialogue ad", ratio: "9:16", video: "/videos/TB Home Renovation Two Portrait_1.mp4", poster: "" },
       { title: "Cricket Stadium Dialogue", tag: "Dialogue ad", ratio: "9:16", video: "/videos/True Balance Cricket Three Portrait_1.mp4", poster: "" },
       { title: "Cricket Dialogue, Part Two", tag: "Narrative storytelling", ratio: "9:16", video: "/videos/True Balance Cricket Two Portrait_1.mp4", poster: "" },
-      // To add the 10Cr+ Downloads Campaign, copy the line below, remove the // and set the file name:
-      // { title: "10Cr+ Downloads Campaign", tag: "Milestone campaign", ratio: "9:16", video: "/videos/YourFile.mp4", poster: "" },
     ],
   },
   {
@@ -74,14 +72,11 @@ export const campaigns: Campaign[] = [
       { title: "SpynPRO Ad One", tag: "Academy campaign", ratio: "9:16", video: "/videos/spyn_AD_One_1.mp4", poster: "" },
       { title: "SpynPRO Ad Two", tag: "Academy campaign", ratio: "9:16", video: "", poster: "", status: "In production" },
     ],
-    // Storyboard row is hidden while this list is empty. To add one later, use:
-    // storyboards: [{ title: "SpynPRO storyboard", image: "/images/YourFileName.jpg" }],
     storyboards: [],
   },
 ];
 
 /* --------------------------- ASPECT RATIOS ---------------------------- */
-// "w" and "h" draw the little shape. "ratio" is the label shown (also used in the form).
 export const formats = {
   title: "Every aspect ratio. Every platform.",
   intro:
@@ -141,6 +136,40 @@ export const previs = {
   ],
 };
 
+/* ------------------ CERTIFICATIONS & PERFORMANCE RIGOR ----------------- */
+export const certifications = {
+  title: "Performance & Technical Standards",
+  intro:
+    "Aesthetics alone don't convert. We engineer our reels to perform, combining cutting-edge Generative AI workflows with officially certified Google advertising principles.",
+  items: [
+    {
+      title: "Google Ads Video Certification",
+      issuer: "Google Skillshop",
+      validity: "Active 2026–2027",
+      credentialId: "197206751",
+      verifyUrl: "https://skillshop.credential.net/fbacc51b-3223-436b-9177-48e8cc7c843e",
+      badgeImage: "/images/google-ads-video-badge.png",
+      certificateImage: "/images/google-ads-video-certificate.png",
+      features: [
+        { label: "ABCD Video Framework", desc: "Attention, Branding, Connection, and Direction built directly into the pre-vis storyboard." },
+        { label: "Demand Gen & Shorts Scaling", desc: "Form-factored creative architectures engineered to drive measurable view-through and conversion actions." },
+      ],
+    },
+    {
+      title: "Introduction to Generative AI",
+      issuer: "Google Cloud",
+      validity: "Verified Credential",
+      credentialId: "Google Cloud Skills Boost",
+      verifyUrl: "https://skills.google/course_templates/536/badge",
+      badgeImage: "/images/google-genai-badge.png",
+      features: [
+        { label: "Diffusion & Foundational AI", desc: "Deep technical command over visual synthesis pipelines, prompt engineering, and character preservation." },
+        { label: "Turnaround Velocity", desc: "Rapid concept-to-reel delivery cycles (48–72h) without production friction or studio overhead." },
+      ],
+    },
+  ],
+};
+
 /* ------------------------------ ABOUT US ------------------------------ */
 export const about = {
   title: "About us",
@@ -181,7 +210,6 @@ export const about = {
 export const contact = {
   title: "Have a campaign to launch?",
   text: "Tell us about the product, the audience and the deadline. We will reply with a production plan.",
-  // Enquiries go to BOTH addresses (the first one receives, the rest are copied)
   emails: ["vedant.d.bhaumik@gmail.com", "ashishsurwase@gmail.com"],
   formTitle: "Send us your enquiry",
   submitLabel: "Send enquiry",
