@@ -11,7 +11,7 @@
    ===================================================================== */
 
 export const site = {
-  name: "FRAME-LOCK", // <- brand name shown top-left (the hyphen is shown in cyan)
+  name: "FRAME-LOCK",
   role: "AI Commercial Producers · Technical Art Directors",
   metaTitle: "Frame-Lock | AI Commercial Production Studio",
   metaDescription:
@@ -36,7 +36,6 @@ type Campaign = {
   storyboards?: { title: string; image: string }[];
 };
 
-// "status" shows a gold badge on a card (use it for work in progress). Leave video: "" until it is ready.
 export const campaigns: Campaign[] = [
   {
     id: "truebalance",
@@ -117,4 +116,116 @@ export const previs = {
   storyboard: {
     title: "12-panel storyboard architecture",
     description:
-      "Every reel is planned as twelve panels before a single frame is generated, so pacing, hooks and product moments are approved up front
+      "Every reel is planned as twelve panels before a single frame is generated, so pacing, hooks and product moments are approved up front.",
+    boards: [
+      { title: "Reel 3: Student Management", image: "/images/Reel 3- Student Mangement.jpg" },
+      { title: "Reel 4: Coach Management", image: "/images/Reel 4- Coach management.jpg" },
+      { title: "Reel 5: Growth & Scaling", image: "/images/Reel 5- Growth & Scaling.jpg" },
+      { title: "Reel 6: Parent's Experience", image: "/images/Reel 6- Parent's Exp.jpg" },
+    ],
+  },
+  pipelineTitle: "The 6-stage AI production workflow",
+  stages: [
+    { name: "Hook Pacing", text: "The first three seconds are scripted to stop the scroll." },
+    { name: "Beat Boards", text: "Story beats are mapped to the 12-panel storyboard." },
+    { name: "Turnarounds", text: "Characters are locked with 3-angle model sheets." },
+    { name: "Video Synthesis", text: "Shots are generated against the locked references." },
+    { name: "VFX Tracking", text: "Product, text and set elements are tracked and composited." },
+    { name: "Master Audio", text: "Voice, music and sound design are mixed for mobile speakers." },
+  ],
+};
+
+/* ------------------ CERTIFICATIONS & PERFORMANCE RIGOR ----------------- */
+export const certifications = {
+  title: "Performance & Technical Standards",
+  intro:
+    "Aesthetics alone don't convert. We engineer our reels to perform, combining cutting-edge Generative AI workflows with officially certified Google advertising principles.",
+  items: [
+    {
+      title: "Google Ads Video Certification",
+      issuer: "Google Skillshop",
+      validity: "Active 2026–2027",
+      credentialId: "197206751",
+      verifyUrl: "https://skillshop.credential.net/fbacc51b-3223-436b-9177-48e8cc7c843e",
+      badgeImage: "/images/google-ads-video-badge.png",
+      certificateImage: "/images/google-ads-video-certificate.png",
+      features: [
+        { label: "ABCD Video Framework", desc: "Attention, Branding, Connection, and Direction built directly into the pre-vis storyboard." },
+        { label: "Demand Gen & Shorts Scaling", desc: "Form-factored creative architectures engineered to drive measurable view-through and conversion actions." },
+      ],
+    },
+    {
+      title: "Introduction to Generative AI",
+      issuer: "Google Cloud",
+      validity: "Verified Credential",
+      credentialId: "Google Cloud Skills Boost",
+      verifyUrl: "https://www.skills.google/public_profiles/YOUR_PUBLIC_PROFILE_ID",
+      badgeImage: "/images/google-genai-badge.png",
+      features: [
+        { label: "Diffusion & Foundational AI", desc: "Deep technical command over visual synthesis pipelines, prompt engineering, and character preservation." },
+        { label: "Turnaround Velocity", desc: "Rapid concept-to-reel delivery cycles (48–72h) without production friction or studio overhead." },
+      ],
+    },
+  ],
+};
+
+/* ------------------------------ ABOUT US ------------------------------ */
+export const about = {
+  title: "About us",
+  intro:
+    "Frame-Lock is the studio we built around one idea: every frame should be locked in, from the first storyboard to the final mix. It is the two of us, so the people you brief are the people who make your film.",
+  people: [
+    {
+      name: "Vedant Diptiman Bhaumik",
+      role: "Co-founder · AI Commercial Producer & Technical Art Director",
+      text: "Designs how every film looks and what every AI tool is asked to make.",
+      duties: ["Storyboards", "Character images", "AI video prompts", "Voiceover prompts"],
+    },
+    {
+      name: "Ashish Ashok Surwase",
+      role: "Co-founder · Script, Generation & Edit",
+      text: "Writes the script, generates the video and voice, and cuts it all into the final film.",
+      duties: ["Script writing", "AI video generation", "Voiceover generation", "Final edit"],
+    },
+  ],
+  equalNote: "We contribute equally. Every film is a shared effort from the first frame to the final cut.",
+  whatTitle: "What we do",
+  what: [
+    "AI commercials and reels in every aspect ratio",
+    "Photorealistic architectural renderings",
+    "Locked character pipelines with 3-angle model sheets",
+    "Storyboards, VFX tracking and master audio, end to end",
+  ],
+  whyTitle: "Why choose us",
+  why: [
+    { title: "No character drift", text: "Every character is locked before a single shot is generated, so faces and outfits stay the same across a campaign." },
+    { title: "Built to convert", text: "Hooks are scripted for the first three seconds, because that is where a scroll is won or lost." },
+    { title: "One team, every format", text: "One production covers every platform, from vertical reels to ultrawide screens." },
+    { title: "Direct access", text: "You work with the two people who make the film, with no layers in between." },
+  ],
+};
+
+/* ----------------------------- CONTACT -------------------------------- */
+export const contact = {
+  title: "Have a campaign to launch?",
+  text: "Tell us about the product, the audience and the deadline. We will reply with a production plan.",
+  emails: ["vedant.d.bhaumik@gmail.com", "ashishsurwase@gmail.com"],
+  formTitle: "Send us your enquiry",
+  submitLabel: "Send enquiry",
+  successText: "Thank you! Your enquiry has been sent. We will get back to you shortly.",
+  errorText: "Something went wrong. Please try again, or use the Email Us button.",
+  projectTypes: [
+    "Real estate campaign",
+    "FinTech or app campaign",
+    "Product or brand film",
+    "AI character pipeline",
+    "Architectural visualization",
+    "Something else",
+  ],
+  budgets: ["Under ₹1 lakh", "₹1 to 3 lakh", "₹3 to 10 lakh", "₹10 lakh and above", "Not sure yet"],
+  emailButtonLabel: "Email Us",
+  emailSubject: "Production enquiry",
+  emailBody:
+    "Hi team,\n\nWe would like to work with you.\n\nProject type:\nAspect ratios needed:\nDeadline:\nBudget:\nDetails:\n\nThank you,",
+  footerNote: "Available for commercial productions worldwide.",
+};
