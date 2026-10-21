@@ -139,10 +139,11 @@ export const previs = {
 export const certifications = {
   title: "Performance & Technical Standards",
   intro:
-    "Aesthetics alone don't convert. We engineer our reels to perform, combining cutting-edge Generative AI workflows with officially certified Google advertising principles.",
+    "Aesthetics alone don't convert. We engineer our commercials to perform, combining cutting-edge Generative AI workflows with officially certified Google and HubSpot creative advertising frameworks across both founders.",
   items: [
     {
       title: "Google Ads Video Certification",
+      holder: "Vedant Bhaumik",
       issuer: "Google Skillshop",
       validity: "Active 2026–2027",
       credentialId: "197206751",
@@ -150,16 +151,42 @@ export const certifications = {
       badgeImage: "/images/google-ads-video-badge.png",
       certificateImage: "/images/google-ads-video-certificate.png",
       features: [
-        { label: "ABCD Video Framework", desc: "Attention, Branding, Connection, and Direction built directly into the pre-vis storyboard." },
+        { label: "ABCD Video Framework", desc: "Attention, Branding, Connection, and Direction built mathematically into the pre-vis storyboard." },
         { label: "Demand Gen & Shorts Scaling", desc: "Form-factored creative architectures engineered to drive measurable view-through and conversion actions." },
       ],
     },
     {
+      title: "Google Ads Creative Certification",
+      holder: "Ashish Surwase",
+      issuer: "Google Skillshop",
+      validity: "Verified Credential",
+      credentialId: "Google Skillshop Certified",
+      verifyUrl: "",
+      badgeImage: "/images/google-ads-creative-badge.png",
+      features: [
+        { label: "High-ROI Script Architecture", desc: "Scripts engineered specifically to trigger algorithmic ad relevance and maximize audience watch-time." },
+        { label: "Multi-Variant Hook Testing", desc: "Strategic asset generation for rapid A/B testing across ad formats without burning creative budget." },
+      ],
+    },
+    {
+      title: "HubSpot Video Marketing Certification",
+      holder: "Ashish Surwase",
+      issuer: "HubSpot Academy",
+      validity: "Verified Credential",
+      credentialId: "HubSpot Certified",
+      verifyUrl: "",
+      badgeImage: "/images/hubspot-video-marketing-badge.png",
+      features: [
+        { label: "Full-Funnel Video Storytelling", desc: "Scripts structured to move viewers from top-of-funnel awareness to high-intent qualified leads." },
+        { label: "Retention-Engineered Editing", desc: "Pacing, dynamic cuts, and narrative tension designed to minimize drop-off across mobile feeds." },
+      ],
+    },
+    {
       title: "Introduction to Generative AI",
+      holder: "Vedant Bhaumik",
       issuer: "Google Cloud",
       validity: "Verified Credential",
       credentialId: "Google Cloud Skills Boost",
-      // Left undefined so it renders as a native verified badge with no broken link:
       verifyUrl: "",
       badgeImage: "/images/google-genai-badge.png",
       features: [
@@ -179,13 +206,13 @@ export const about = {
     {
       name: "Vedant Diptiman Bhaumik",
       role: "Co-founder · AI Commercial Producer & Technical Art Director",
-      text: "Designs how every film looks and what every AI tool is asked to make.",
+      text: "Designs how every film looks and what every AI tool is asked to make. Backed by Google Ads Video and Google Cloud GenAI certifications.",
       duties: ["Storyboards", "Character images", "AI video prompts", "Voiceover prompts"],
     },
     {
       name: "Ashish Ashok Surwase",
       role: "Co-founder · Script, Generation & Edit",
-      text: "Writes the script, generates the video and voice, and cuts it all into the final film.",
+      text: "Writes the script, generates the video and voice, and cuts it all into the final film. Certified in Google Ads Creative and HubSpot Video Marketing.",
       duties: ["Script writing", "AI video generation", "Voiceover generation", "Final edit"],
     },
   ],

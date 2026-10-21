@@ -87,10 +87,9 @@ function playOnly(v: HTMLVideoElement) {
   }
   activeVideo = v;
 }
-// True on computers with a mouse, false on phones and tablets
 const canHover = () => typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-// 9:16 video card: plays on hover (desktop) or tap (mobile)
+// 9:16 video card: performance-optimized, on-demand loading
 function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { title: string; tag: string; video: string; poster?: string; ratio?: string; status?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [rw, rh] = ratio.split(":").map(Number);
@@ -98,6 +97,7 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
   const width = r < 0.9 ? "w-[calc(50%-10px)] md:w-60" : r <= 1.4 ? "w-full sm:w-[calc(50%-10px)] md:w-72" : "w-full md:w-[28rem]";
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const v = ref.current;
@@ -112,13 +112,18 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
     const v = ref.current;
     if (!v) return;
     const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting && !v.paused) { v.pause(); v.muted = true; }
+      if (!e.isIntersecting && !v.paused) { 
+        v.pause(); 
+        v.muted = true; 
+        setPlaying(false);
+      }
     }, { threshold: 0.25 });
     io.observe(v);
     return () => io.disconnect();
   }, [failed]);
 
   const startWithSound = async () => {
+    setIsLoaded(true);
     const v = ref.current;
     if (!v) return;
     playOnly(v);
@@ -130,11 +135,13 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
       try { await v.play(); } catch {}
     }
   };
+
   const stop = () => {
     const v = ref.current;
     if (!v) return;
     v.pause();
     v.muted = true;
+    setPlaying(false);
   };
 
   return (
@@ -153,17 +160,17 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
           startWithSound();
         }}
         style={{ aspectRatio: `${rw} / ${rh}` }}
-        className="relative block w-full overflow-hidden bg-black text-left"
+        className="relative block w-full overflow-hidden bg-[#070a13] text-left"
       >
         {video && !failed ? (
           <video
             ref={ref}
-            src={`${url(video)}#t=0.1`}
+            src={isLoaded ? `${url(video)}#t=0.1` : undefined}
             poster={poster ? url(poster) : undefined}
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
             onVolumeChange={(e) => setSound(!e.currentTarget.muted)}
@@ -173,6 +180,15 @@ function VideoCard({ title, tag, video, poster, ratio = "9:16", status }: { titl
         ) : (
           <SafeImage src={poster} alt="" />
         )}
+
+        {!playing && (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 backdrop-blur transition-transform group-hover:scale-110">
+              <span className="text-sm text-white pl-0.5">▶</span>
+            </div>
+          </div>
+        )}
+
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070a13]/90 via-transparent to-transparent" />
         <div className="pointer-events-none absolute inset-0 opacity-0 shadow-[inset_0_0_0_1px_rgba(34,211,238,0.7),inset_0_0_40px_rgba(34,211,238,0.25)] transition-opacity duration-500 group-hover:opacity-100" />
         {status && (
@@ -211,7 +227,6 @@ function SectionTitle({ title, intro }: { title: string; intro?: string }) {
 const field =
   "w-full rounded-xl border border-white/10 bg-[#0c1224] px-4 py-3 text-white placeholder:text-slate-500 focus:border-[#22d3ee] focus:outline-none";
 
-// Enquiry form: emails both addresses in data.ts (via FormSubmit)
 function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [detail, setDetail] = useState("");
@@ -518,15 +533,19 @@ export default function Home() {
         <section id="certifications" className="scroll-mt-28 mx-auto max-w-6xl px-6 py-24">
           <SectionTitle title={certifications.title} intro={certifications.intro} />
 
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2">
             {certifications.items.map((item, idx) => (
-              <Reveal key={item.title} delay={idx * 0.12}>
+              <Reveal key={item.title} delay={idx * 0.1}>
                 <div className="glass flex h-full flex-col justify-between rounded-3xl p-6 md:p-8 transition-colors hover:border-[#22d3ee]/40">
                   <div>
-                    {/* Header: Title + Tag */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+                    {/* Header: Title, Co-Founder Lead & Validity */}
+                    <div className="flex flex-wrap items-start justify-between gap-2 border-b border-white/10 pb-4">
                       <div>
-                        <span className="text-xs font-semibold tracking-wider text-[#22d3ee] uppercase">{item.issuer}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold tracking-wider text-[#22d3ee] uppercase">{item.issuer}</span>
+                          <span className="text-slate-600">·</span>
+                          <span className="text-xs font-mono text-slate-400">{item.holder}</span>
+                        </div>
                         <h3 className="font-display text-2xl font-bold text-white mt-1">{item.title}</h3>
                       </div>
                       <span className="rounded-full border border-[#e8b94a]/40 bg-[#e8b94a]/10 px-3 py-1 text-xs font-semibold text-[#e8b94a]">
@@ -534,7 +553,7 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* Visual Asset */}
+                    {/* Visual Asset (Badge or Certificate) */}
                     <div className="mt-6 flex flex-col items-center">
                       {item.certificateImage ? (
                         <div className="w-full">
@@ -564,7 +583,7 @@ export default function Home() {
                           </div>
 
                           {activeCertView === "badge" ? (
-                            <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
+                            <div className="mx-auto flex h-44 w-44 items-center justify-center p-2">
                               <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
                             </div>
                           ) : (
@@ -574,7 +593,7 @@ export default function Home() {
                           )}
                         </div>
                       ) : (
-                        <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
+                        <div className="mx-auto flex h-44 w-44 items-center justify-center p-2">
                           <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
                         </div>
                       )}
