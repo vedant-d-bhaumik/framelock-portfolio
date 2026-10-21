@@ -102,7 +102,7 @@ export const consistency = {
     { name: "Amit", role: "Operations Manager, Martial Arts Dojo", image: "/images/Amit- Operations Manager- Martial Arts Dojo.jpg" },
     { name: "Arjun", role: "Child Swimmer", image: "/images/Arjun-Child Swimmer.jpg" },
     { name: "Kabir", role: "Martial Arts Coach", image: "/images/Kabir- Martial Arts Coach.jpg" },
-    { name: "Majon", role: "Swimming Parent", image: "/images/Majon Swimming Parent.jpg" },
+    { name: "Manoj", role: "Swimming Parent", image: "/images/Majon Swimming Parent.jpg" },
     { name: "Rajesh", role: "Academy Admin", image: "/images/Rajesh- Accademy Admin.jpg" },
     { name: "Rohan", role: "Head Football Coach", image: "/images/Rohan- head Football Coach.jpg" },
     { name: "Sameer", role: "Founder", image: "/images/Sameer - Founder.jpg" },
@@ -141,6 +141,7 @@ export const certifications = {
   intro:
     "Aesthetics alone don't convert. We engineer our commercials to perform, combining cutting-edge Generative AI workflows with officially certified Google and HubSpot creative advertising frameworks across both founders.",
   items: [
+    // ROW 1 - LEFT: Vedant
     {
       title: "Google Ads Video Certification",
       holder: "Vedant Bhaumik",
@@ -155,6 +156,7 @@ export const certifications = {
         { label: "Demand Gen & Shorts Scaling", desc: "Form-factored creative architectures engineered to drive measurable view-through and conversion actions." },
       ],
     },
+    // ROW 1 - RIGHT: Ashish
     {
       title: "Google Ads Creative Certification",
       holder: "Ashish Surwase",
@@ -168,19 +170,7 @@ export const certifications = {
         { label: "Multi-Variant Hook Testing", desc: "Strategic asset generation for rapid A/B testing across ad formats without burning creative budget." },
       ],
     },
-    {
-      title: "HubSpot Video Marketing Certification",
-      holder: "Ashish Surwase",
-      issuer: "HubSpot Academy",
-      validity: "Verified Credential",
-      credentialId: "HubSpot Certified",
-      verifyUrl: "",
-      badgeImage: "/images/hubspot-video-marketing-badge.png",
-      features: [
-        { label: "Full-Funnel Video Storytelling", desc: "Scripts structured to move viewers from top-of-funnel awareness to high-intent qualified leads." },
-        { label: "Retention-Engineered Editing", desc: "Pacing, dynamic cuts, and narrative tension designed to minimize drop-off across mobile feeds." },
-      ],
-    },
+    // ROW 2 - LEFT: Vedant
     {
       title: "Introduction to Generative AI",
       holder: "Vedant Bhaumik",
@@ -192,6 +182,20 @@ export const certifications = {
       features: [
         { label: "Diffusion & Foundational AI", desc: "Deep technical command over visual synthesis pipelines, prompt engineering, and character preservation." },
         { label: "Turnaround Velocity", desc: "Rapid concept-to-reel delivery cycles (48–72h) without production friction or studio overhead." },
+      ],
+    },
+    // ROW 2 - RIGHT: Ashish
+    {
+      title: "HubSpot Video Marketing Certification",
+      holder: "Ashish Surwase",
+      issuer: "HubSpot Academy",
+      validity: "Verified Credential",
+      credentialId: "HubSpot Certified",
+      verifyUrl: "",
+      badgeImage: "/images/hubspot-video-marketing-badge.png",
+      features: [
+        { label: "Full-Funnel Video Storytelling", desc: "Scripts structured to move viewers from top-of-funnel awareness to high-intent qualified leads." },
+        { label: "Retention-Engineered Editing", desc: "Pacing, dynamic cuts, and narrative tension designed to minimize drop-off across mobile feeds." },
       ],
     },
   ],
