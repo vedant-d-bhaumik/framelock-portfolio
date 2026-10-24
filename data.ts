@@ -93,7 +93,7 @@ export const formats = {
   ],
 };
 
-/* ---------------------- AI CONSISTENCY ENGINE ------------------------- */
+/* ---------------------- AI CONSISTENGINE ------------------------- */
 export const consistency = {
   title: "The AI Consistency Engine",
   intro:
@@ -139,9 +139,8 @@ export const previs = {
 export const certifications = {
   title: "Performance & Technical Standards",
   intro:
-    "Aesthetics alone don't convert. We engineer our commercials to perform, combining cutting-edge Generative AI workflows with officially certified Google and HubSpot creative advertising frameworks across both founders.",
+    "Aesthetics alone don't convert. We engineer our reels to perform, combining cutting-edge Generative AI workflows with officially certified Google advertising principles.",
   items: [
-    // ROW 1 - LEFT: Vedant
     {
       title: "Google Ads Video Certification",
       holder: "Vedant Bhaumik",
@@ -156,21 +155,6 @@ export const certifications = {
         { label: "Demand Gen & Shorts Scaling", desc: "Form-factored creative architectures engineered to drive measurable view-through and conversion actions." },
       ],
     },
-    // ROW 1 - RIGHT: Ashish
-    {
-      title: "Google Ads Creative Certification",
-      holder: "Ashish Surwase",
-      issuer: "Google Skillshop",
-      validity: "Verified Credential",
-      credentialId: "Google Skillshop Certified",
-      verifyUrl: "",
-      badgeImage: "/images/google-ads-creative-badge.png",
-      features: [
-        { label: "High-ROI Script Architecture", desc: "Scripts engineered specifically to trigger algorithmic ad relevance and maximize audience watch-time." },
-        { label: "Multi-Variant Hook Testing", desc: "Strategic asset generation for rapid A/B testing across ad formats without burning creative budget." },
-      ],
-    },
-    // ROW 2 - LEFT: Vedant
     {
       title: "Introduction to Generative AI",
       holder: "Vedant Bhaumik",
@@ -182,20 +166,6 @@ export const certifications = {
       features: [
         { label: "Diffusion & Foundational AI", desc: "Deep technical command over visual synthesis pipelines, prompt engineering, and character preservation." },
         { label: "Turnaround Velocity", desc: "Rapid concept-to-reel delivery cycles (48–72h) without production friction or studio overhead." },
-      ],
-    },
-    // ROW 2 - RIGHT: Ashish
-    {
-      title: "HubSpot Video Marketing Certification",
-      holder: "Ashish Surwase",
-      issuer: "HubSpot Academy",
-      validity: "Verified Credential",
-      credentialId: "HubSpot Certified",
-      verifyUrl: "",
-      badgeImage: "/images/hubspot-video-marketing-badge.png",
-      features: [
-        { label: "Full-Funnel Video Storytelling", desc: "Scripts structured to move viewers from top-of-funnel awareness to high-intent qualified leads." },
-        { label: "Retention-Engineered Editing", desc: "Pacing, dynamic cuts, and narrative tension designed to minimize drop-off across mobile feeds." },
       ],
     },
   ],
@@ -216,7 +186,7 @@ export const about = {
     {
       name: "Ashish Ashok Surwase",
       role: "Co-founder · Script, Generation & Edit",
-      text: "Writes the script, generates the video and voice, and cuts it all into the final film. Certified in Google Ads Creative and HubSpot Video Marketing.",
+      text: "Writes the script, generates the video and voice, and cuts it all into the final film.",
       duties: ["Script writing", "AI video generation", "Voiceover generation", "Final edit"],
     },
   ],

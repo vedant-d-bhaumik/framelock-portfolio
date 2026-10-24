@@ -538,7 +538,7 @@ export default function Home() {
               <Reveal key={item.title} delay={idx * 0.1}>
                 <div className="glass flex h-full flex-col justify-between rounded-3xl p-6 md:p-8 transition-colors hover:border-[#22d3ee]/40">
                   <div>
-                    {/* Header: Title, Co-Founder Lead & Validity */}
+                    {/* Header: Title, Holder & Validity */}
                     <div className="flex flex-wrap items-start justify-between gap-2 border-b border-white/10 pb-4">
                       <div>
                         <div className="flex items-center gap-2">
@@ -583,7 +583,7 @@ export default function Home() {
                           </div>
 
                           {activeCertView === "badge" ? (
-                            <div className="mx-auto flex h-44 w-44 items-center justify-center p-2">
+                            <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
                               <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
                             </div>
                           ) : (
@@ -593,7 +593,7 @@ export default function Home() {
                           )}
                         </div>
                       ) : (
-                        <div className="mx-auto flex h-44 w-44 items-center justify-center p-2">
+                        <div className="mx-auto flex h-48 w-48 items-center justify-center p-2">
                           <NaturalImage src={item.badgeImage} alt={`${item.title} Badge`} />
                         </div>
                       )}
